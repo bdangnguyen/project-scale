@@ -3,8 +3,10 @@ use specs::prelude::*;
 
 mod components;
 mod player;
+mod map;
 pub use components::*;
 pub use player::*;
+pub use map::*;
 
 pub struct State {
     ecs: World
@@ -15,6 +17,9 @@ impl GameState for State {
         ctx.cls();
 
         player_input(self, ctx);
+
+        let map = self.ecs.fetch::<Vec<TileType>>();
+        draw_map(&map, ctx);
         
         let positions = self.ecs.read_storage::<Position>();
         let renderables = self.ecs.read_storage::<Renderable>();
@@ -39,6 +44,7 @@ fn main() -> rltk::BError {
     gs.ecs.register::<Position>();
     gs.ecs.register::<Renderable>();
     gs.ecs.register::<Player>();
+    gs.ecs.insert(new_map());
 
     gs.ecs
         .create_entity()
