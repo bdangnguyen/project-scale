@@ -16,6 +16,6 @@ impl Rect {
     }
 
     pub fn center(&self) -> (i32, i32) {
-        ((self.x1 + self.x2) / 1, (self.y1 + self.y2) / 2)
+        ((self.x1 + self.x2) / 2, (self.y1 + self.y2) / 2)
     }
 }
